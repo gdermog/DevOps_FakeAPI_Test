@@ -29,3 +29,5 @@ jobs:
       with:
         collection: ecommerce-api-collection.json
         environment: ecommerce-environment.json
+        reporters: cli
+        delayRequest: 200
