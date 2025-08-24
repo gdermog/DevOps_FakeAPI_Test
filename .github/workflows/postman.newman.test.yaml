@@ -29,5 +29,6 @@ jobs:
       with:
         collection: ecommerce-api-collection.json
         environment: ecommerce-environment.json
-        reporters: cli
+        reporters: '["cli"]'
         delayRequest: 200
+        verbose: true

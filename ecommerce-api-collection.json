@@ -700,7 +700,11 @@
       "script": {
         "type": "text/javascript",
         "exec": [
-          ""
+          "const ua = pm.environment.get('CI_UA') || 'Mozilla/5.0';\r",
+          "pm.request.headers.upsert({ key: 'User-Agent', value: ua });\r",
+          "pm.request.headers.upsert({ key: 'Accept', value: 'application/json' });\r",
+          "\r",
+          "console.log('UA ->', pm.request.headers.get('User-Agent'));"
         ]
       }
     },
@@ -742,7 +746,6 @@
     {
       "key": "id2",
       "value": "5",
-      "type": "string",
       "description": {
         "content": "",
         "type": "text/plain"
