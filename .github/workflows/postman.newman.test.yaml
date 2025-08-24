@@ -16,6 +16,14 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v4
 
+    - name: Debug curl (bez UA)
+      run: |
+        curl -i https://fakestoreapi.com/products || true
+
+    - name: Debug curl (s UA)
+      run: |
+        curl -i -H "User-Agent: Mozilla/5.0" -H "Accept: application/json" https://fakestoreapi.com/products || true
+
     - name: Runing newman
       uses: matt-ball/newman-action@master
       with:
