@@ -1,8 +1,8 @@
 {
-	"id": "d31ba810-847d-4447-b7be-e1cca40328ff",
-	"name": "Fake API Environment",
-	"values": [],
-	"_postman_variable_scope": "environment",
-	"_postman_exported_at": "2025-08-24T16:43:04.518Z",
-	"_postman_exported_using": "Postman/11.59.7"
+  "id": "d31ba810-847d-4447-b7be-e1cca40328ff",
+  "name": "Fake API Environment",
+  "values": [],
+  "_postman_variable_scope": "environment",
+  "_postman_exported_at": "2025-08-24T16:43:04.518Z",
+  "_postman_exported_using": "Postman/11.59.7"
 }
