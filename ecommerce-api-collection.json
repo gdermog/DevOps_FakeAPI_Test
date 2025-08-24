@@ -1,0 +1,768 @@
+{
+	"info": {
+		"_postman_id": "26b7f88e-2186-4cbf-8146-4c9675bee6ac",
+		"name": "Fake Store API Basis",
+		"description": "DevOps Training testing collection, Fake API ([https://fakestoreapi.com/](https://fakestoreapi.com/))",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "18708510"
+	},
+	"item": [
+		{
+			"name": "Get products",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is a list (array)\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"    const firstProduct = jsonData[0];",
+							"    pm.expect(firstProduct).to.be.an(\"object\");",
+							"});",
+							"",
+							"const firstProduct = jsonData[0];",
+							"pm.test(\"First item in the response is an product\", function () {",
+							"    pm.expect(firstProduct).to.be.an(\"object\");",
+							"    pm.expect(firstProduct.id).to.be.a(\"number\");",
+							"    pm.expect(firstProduct.title).to.be.a(\"string\");",
+							"    pm.expect(firstProduct.price).to.be.a(\"number\");",
+							"    pm.expect(firstProduct.description).to.be.a(\"string\");",
+							"    pm.expect(firstProduct.category).to.be.a(\"string\");",
+							"    pm.expect(firstProduct.image).to.be.a(\"string\");",
+							"    pm.expect(firstProduct.rating).to.be.a(\"object\");",
+							"});",
+							"",
+							"const firstProductPrice = firstProduct.price;",
+							"pm.test(\"Product price is positive number\", function () {",
+							"     pm.expect(firstProductPrice).to.be.greaterThan(0.0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Get single product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is an product\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    pm.expect(jsonData.id).to.be.eql(Number(pm.variables.get(\"id\")));",
+							"    pm.expect(jsonData.title).to.be.a(\"string\");",
+							"    pm.expect(jsonData.price).to.be.a(\"number\");",
+							"    pm.expect(jsonData.description).to.be.a(\"string\");",
+							"    pm.expect(jsonData.category).to.be.a(\"string\");",
+							"    pm.expect(jsonData.image).to.be.a(\"string\");",
+							"    pm.expect(jsonData.rating).to.be.a(\"object\");",
+							"});",
+							"",
+							"",
+							"const jsonDataPrice = jsonData.price;",
+							"pm.test(\"Product price is positive number\", function () {",
+							"    pm.expect(jsonDataPrice).to.be.greaterThan(0.0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"{{id}}"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Get categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is a list (array) of strings\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"    const firstCategory = jsonData[0];",
+							"    pm.expect(firstCategory).to.be.an(\"string\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/categories",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"categories"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Get products per category",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/products/category/{{category_id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"category",
+						"{{category_id}}"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Create new product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\n    \"id\": 0,\n    \"title\": \"{{$randomLoremSentence}}\",\n    \"price\": {{$randomPrice}},\n    \"description\": \"{{$randomLoremParagraph}}\",\n    \"category\": \"{{$randomWords}}\",\n    \"image\": \"{{$randomAbstractImage}}\"\n\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/products",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Update existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful PUT request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201, 204]);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is an product price update\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    pm.expect(jsonData.price).to.be.a(\"number\");",
+							"});",
+							"",
+							"pm.test(\"Product price is positive number\", function () {",
+							"    pm.expect(jsonData.id).to.be.eql(Number(pm.variables.get(\"id\")));",
+							"    pm.expect(jsonData.price).to.be.greaterThan(0.0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": {{id}},\n    \"price\": {{$randomPrice}}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/products/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"{{id}}"
+					]
+				},
+				"description": "This is a PUT request and it is used to overwrite an existing piece of data. For instance, after you create an entity with a POST request, you may want to modify that later. You can do that using a PUT request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful PUT request typically returns a `200 OK`, `201 Created`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Delete existing product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful DELETE request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 202, 204]);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is an product\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    pm.expect(jsonData.id).to.be.eql(Number(pm.variables.get(\"id\")));",
+							"    pm.expect(jsonData.title).to.be.a(\"string\");",
+							"    pm.expect(jsonData.price).to.be.a(\"number\");",
+							"    pm.expect(jsonData.description).to.be.a(\"string\");",
+							"    pm.expect(jsonData.category).to.be.a(\"string\");",
+							"    pm.expect(jsonData.image).to.be.a(\"string\");",
+							"    pm.expect(jsonData.rating).to.be.a(\"object\");",
+							"});",
+							"",
+							"",
+							"const jsonDataPrice = jsonData.price;",
+							"pm.test(\"Product price is positive number\", function () {",
+							"    pm.expect(jsonDataPrice).to.be.greaterThan(0.0);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/products/{{id}}",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"products",
+						"{{id}}"
+					]
+				},
+				"description": "This is a DELETE request, and it is used to delete data that was previously created via a POST request. You typically identify the entity being updated by including an identifier in the URL (eg. `id=1`).\n\nA successful DELETE request typically returns a `200 OK`, `202 Accepted`, or `204 No Content` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Get carts",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is a list (array)\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"});",
+							"",
+							"pm.test(\"First item in the response is a cart\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"array\");",
+							"    if (jsonData.length > 0) {",
+							"        const firstCart = jsonData[0];",
+							"        pm.expect(firstCart).to.be.an(\"object\");",
+							"        pm.expect(firstCart.id).to.be.a(\"number\");",
+							"        pm.expect(firstCart.userId).to.be.a(\"number\");",
+							"        pm.expect(firstCart.date).to.be.a(\"string\");",
+							"        pm.expect(firstCart.products).to.be.a(\"array\");",
+							"    }",
+							"});",
+							"",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/carts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"carts"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Create new cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is a cart\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"    pm.expect(jsonData.id).to.be.a(\"number\");",
+							"    pm.expect(jsonData.userId).to.be.a(\"number\");",
+							"    pm.expect(jsonData.userId).to.be.eql(Number(pm.variables.get(\"user_id\")));",
+							"    pm.expect(jsonData.products).to.be.a(\"array\");",
+							"",
+							"    pm.expect(jsonData.products.length).to.be.eql(2);",
+							"",
+							"    const prod1 = jsonData.products[0];",
+							"    pm.expect(prod1).to.be.an(\"object\");",
+							"    pm.expect(prod1.productId).to.be.a(\"number\");",
+							"    pm.expect(prod1.productId).to.be.eql(Number(pm.variables.get(\"id\"))); ",
+							"    pm.expect(prod1.quantity).to.be.a(\"number\");",
+							"    pm.expect(prod1.quantity).to.be.eql(2);",
+							"",
+							"    const prod2 = jsonData.products[1];",
+							"    pm.expect(prod2).to.be.an(\"object\");",
+							"    pm.expect(prod2.productId).to.be.a(\"number\");",
+							"    pm.expect(prod2.productId).to.be.eql(Number(pm.variables.get(\"id2\"))); ",
+							"    pm.expect(prod2.quantity).to.be.a(\"number\");",
+							"    pm.expect(prod2.quantity).to.be.eql(3);    ",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"userId\": {{user_id}},\n    \"products\": [\n        {\n            \"productId\": {{id}},\n            \"quantity\": 2\n        },\n        {\n            \"productId\": {{id2}},\n            \"quantity\": 3\n        }\n    ]\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/carts",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"carts"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		},
+		{
+			"name": "Get users",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {",
+							"    pm.response.to.have.status(200);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{base_url}}/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+			},
+			"response": []
+		},
+		{
+			"name": "Create new user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Successful POST request\", function () {",
+							"    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+							"});",
+							"",
+							"pm.test(\"Response time is less than 2000ms\", function () {",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);",
+							"});",
+							"",
+							"const jsonData = pm.response.json();",
+							"pm.test(\"Response is a cart\", function () {",
+							"    pm.expect(jsonData).to.be.an(\"object\");",
+							"    pm.expect(jsonData.id).to.be.an(\"number\");",
+							"});"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				},
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"genFirstName = pm.variables.replaceIn(\"{{$randomFirstName}}\");\r",
+							"genLastName = pm.variables.replaceIn(\"{{$randomLastName}}\");\r",
+							"genUserName = genLastName + \".\" + genFirstName;\r",
+							"genUserEmail = genUserName + \"@gmail.com\";\r",
+							"\r",
+							"pm.collectionVariables.set( \"generatedFirstName\", genFirstName );\r",
+							"pm.collectionVariables.set( \"generatedLastName\", genLastName );\r",
+							"pm.collectionVariables.set( \"generatedUserEmail\", genUserEmail );\r",
+							"pm.collectionVariables.set( \"generatedUserName\", genUserName );"
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"id\": 0,\n    \"address\": {\n        \"geolocation\": {\n            \"lat\": \"{{$randomLatitude}}\",\n            \"long\": \"{{$randomLongitude}}\"\n        },\n        \"city\": \"{{$randomCity}}\",\n        \"street\": \"{{$randomStreetName}}\",\n        \"number\": {{$randomInt}},\n        \"zipcode\": \"{{$randomInt}}-{{$randomInt}}\"\n    },\n    \"email\": \"{{generatedUserEmail}}\",\n    \"username\": \"{{generatedUserName}}\",\n    \"password\": \"{{$randomPassword}}\",\n    \"name\": {\n        \"firstname\": \"{{generatedFirstName}}\",\n        \"lastname\": \"{{generatedLastName}}\"\n    },\n    \"phone\": \"{{$randomPhoneNumberExt}}\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_url}}/users",
+					"host": [
+						"{{base_url}}"
+					],
+					"path": [
+						"users"
+					]
+				},
+				"description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+			},
+			"response": []
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "id",
+			"value": "1"
+		},
+		{
+			"key": "base_url",
+			"value": "https://fakestoreapi.com/"
+		},
+		{
+			"key": "category_id",
+			"value": "jewelery",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "user_id",
+			"value": "1",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "id2",
+			"value": "5",
+			"type": "string",
+			"description": {
+				"content": "",
+				"type": "text/plain"
+			}
+		},
+		{
+			"key": "generatedUserName",
+			"value": ""
+		},
+		{
+			"key": "generatedFirstName",
+			"value": ""
+		},
+		{
+			"key": "generatedLastName",
+			"value": ""
+		},
+		{
+			"key": "generatedUserEmail",
+			"value": ""
+		}
+	]
+}
