@@ -31,4 +31,3 @@ jobs:
         environment: ecommerce-environment.json
         reporters: '["cli"]'
         delayRequest: 200
-        verbose: true
